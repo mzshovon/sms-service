@@ -13,6 +13,9 @@ cp .env.example .env
 
 Update `.env` with the SMS provider base URL, endpoint paths, API key, and sender ID.
 
+Set `APP_ENV=production` in deployed environments. Production disables `/docs`,
+`/redoc`, and `/openapi.json`.
+
 ## Run
 
 ```bash
@@ -40,6 +43,16 @@ docker compose up --build
 ```
 
 ## APIs
+
+SMS endpoints require client credentials:
+
+```bash
+X-Client-Id: <API_CLIENT_ID>
+X-Client-Password: <API_CLIENT_PASSWORD>
+```
+
+`/sms/send` is rate-limited by client id using `SMS_SEND_RATE_LIMIT_REQUESTS`
+per `SMS_SEND_RATE_LIMIT_WINDOW_SECONDS`.
 
 ### Send SMS
 

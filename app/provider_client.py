@@ -27,9 +27,12 @@ class ProviderClient:
                 response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             detail = _read_response(exc.response)
+            response_detail: dict[str, Any] = {"message": "SMS provider request failed"}
+            if not self._settings.is_production:
+                response_detail["provider"] = detail
             raise HTTPException(
                 status_code=exc.response.status_code,
-                detail={"message": "SMS provider request failed", "provider": detail},
+                detail=response_detail,
             ) from exc
         except httpx.HTTPError as exc:
             raise HTTPException(
