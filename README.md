@@ -19,6 +19,26 @@ Update `.env` with the SMS provider base URL, endpoint paths, API key, and sende
 uvicorn app.main:app --reload
 ```
 
+## Docker
+
+Build the image:
+
+```bash
+docker build -t sms-service .
+```
+
+Run it with environment variables from `.env`; the app listens on `PORT`:
+
+```bash
+docker run --env-file .env -e PORT=8000 -p 8000:8000 sms-service
+```
+
+Or use Docker Compose:
+
+```bash
+docker compose up --build
+```
+
 ## APIs
 
 ### Send SMS
